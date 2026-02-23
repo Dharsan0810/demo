@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Deepthi M — 3D Animated Portfolio</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --main-bg: #10182d;
+      --card-bg: #21294aee;
+      --highlight: #58c6ff;
+      --text: #e6eef8;
+      --glass: rgba(255,255,255,0.06);
+      --accent: #fc49a6;
+      --radius: 22px;
+      --glow: 0 0 28px 6px #58c6ff6b;
+      --shadow: 0 8px 30px rgba(2,6,23,0.5);
+      --linkedInBlue: #0077b5;
+      --linkedInHover: #005582;
+    }
+    html, body {
+      margin:0; padding:0; min-height:100vh; height:100%;
+      width:100vw; color:var(--text);
+      font-family:'Montserrat',system-ui,sans-serif;
+      background:linear-gradient(138deg, #10182d 0%, #1b2351 100%);
+      overflow-x:hidden;
+      scroll-behavior:smooth;
+    }
+    .bg-anim {
+      position:fixed; inset:0; z-index:0; pointer-events:none; 
+      overflow:hidden;
+      animation: gradientMove 18s ease-in-out infinite alternate;
+      background: radial-gradient(circle at 20% 50%, #59e6ff55, transparent 70%),
+                  radial-gradient(circle at 85% 20%, #fc49a655, transparent 60%);
+      filter: blur(140px);
+    }
+    @keyframes gradientMove {
+      0% { filter:hue-rotate(0deg);}
+      100%{ filter:hue-rotate(80deg);}
+    }
+    .container {
+      position:relative;
+      z-index:3;
+      max-width:1150px; margin:36px auto;padding:36px 20px;
+    }
+    header {
+      display:flex;align-items:center;justify-content:space-between;
+    }
+    .profile-card {
+      background:var(--card-bg); border-radius:var(--radius);
+      box-shadow:var(--glow),var(--shadow);
+      display:grid; grid-template-columns:220px 1fr;
+      gap:38px; align-items:center; margin-bottom:44px;
+      transform-style: preserve-3d;
+      perspective:700px;
+      animation: cardIn 0.9s cubic-bezier(.21,2.8,.41,0.79) both;
+      transition: box-shadow 0.3s ease-in-out;
+    }
+    .profile-card:hover {
+      box-shadow: 0 0 70px var(--accent);
+      cursor: pointer;
+    }
+    @keyframes cardIn{
+      0%{opacity:0;transform:perspective(700px) rotateX(36deg) scale(0.92);}
+      100%{opacity:1;transform:perspective(700px) rotateX(0) scale(1);}
+    }
+    .avatar {
+      width:170px; height:170px; border-radius:50%;
+      box-shadow: 0 18px 40px #58c6ff29;
+      border:5px solid var(--highlight);
+      overflow:hidden; margin:auto; background:#fff1;
+      transition: box-shadow 0.3s, border 0.2s;
+      transform-style: preserve-3d;
+      animation: floaty 6s ease-in-out infinite;
+    }
+    .avatar:hover {
+      box-shadow: 0 25px 60px #58c6ff88;
+      border-color: var(--accent);
+      animation: floatyPulse 3s ease-in-out infinite;
+    }
+    @keyframes floaty {
+      0%, 100% {transform: translateY(4px) rotateY(0deg);}
+      50% {transform: translateY(-8px) rotateY(15deg);}
+    }
+    @keyframes floatyPulse {
+      0%, 100% {transform: translateY(0) scale(1);}
+      50% {transform: translateY(-8px) scale(1.05);}
+    }
+    .avatar img { width:100%; height:100%; object-fit:cover; display:block; }
+    .details { padding:12px 0; }
+    .details h1 { margin-top:0;font-size:2.35rem; letter-spacing:2px; color:var(--highlight);}
+    .subtitle {color:#96c6ff; font-weight:700; margin-bottom:6px;}
+    .contact {color:var(--accent); margin-bottom:12px; font-size:1rem;}
+    .badge-list {margin:12px 0 3px 0;}
+    .badge {
+      background:linear-gradient(90deg,#59e6ff2b,#fc49a62f);
+      color:var(--highlight);
+      padding:6px 13px; margin:0 8px 8px 0;border-radius:999px;
+      display:inline-block; font-weight:600; font-size:0.96rem;
+      border:1.5px solid #59e6ff44;
+      transition:background 0.18s;
+    }
+    .badge:hover {
+      background: var(--accent);
+      color: #042;
+      border-color: var(--accent);
+      transition: background 0.3s;
+    }
+    .section {margin:36px 0;}
+    .section h2 {
+      color:var(--accent); margin-bottom:20px; font-size:1.6rem;
+      letter-spacing:1.4px;
+      text-shadow: 0 2px 12px #ffafd759;
+      padding-bottom:7px;border-bottom:1px solid #3b4a68;
+    }
+    .timeline {
+      border-left:3px solid var(--highlight);
+      margin-left:18px; padding-left:30px;
+    }
+    .timeline-item {
+      margin-bottom:32px; position:relative;
+      animation: slideIn 1.25s both;
+    }
+    .timeline-item:before {
+      content:"";
+      position:absolute; left:-38px; top:7px;
+      width:16px; height:16px; background:var(--accent);
+      border-radius:50%; box-shadow:0 0 9px #fc49a655;
+      border:3px solid #fff4;
+    }
+    @keyframes slideIn {
+      0% {opacity:0;transform: translateX(-18px);}
+      100% {opacity:1;transform: translateX(0);}
+    }
+    .projects-grid {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:18px;
+    }
+    .project {
+      background:var(--card-bg);
+      border-radius:16px;
+      padding:16px 20px;
+      border:1.5px solid transparent;
+      box-shadow:var(--shadow);
+      transition:transform 0.32s ease, border-color 0.3s;
+      cursor:pointer;
+    }
+    .project:hover {
+      border-color: var(--accent);
+      transform: translateY(-8px) scale(1.04);
+      box-shadow: 0 10px 30px var(--accent);
+    }
+    .project h3 {
+      margin-top:0;color:var(--highlight); font-weight:bold;
+    }
+    .project p {
+      color:#aabfff; font-style:italic; font-size:0.9rem;
+      margin-bottom:0;
+    }
+    footer {
+      margin-top:48px;
+      text-align:center;
+      color:#6b83a6;
+      font-size:0.9rem;
+      font-weight:600;
+    }
+    .download-btn {
+      display:inline-block;
+      margin:25px 14px 25px 0;
+      padding:14px 24px;
+      background: var(--accent);
+      color: #042;
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 999px;
+      box-shadow: 0 10px 40px rgba(252,73,166,0.4);
+      transition: background 0.28s ease;
+    }
+    .download-btn:hover {
+      background: #ff2ea1;
+      box-shadow: 0 12px 45px rgba(255,46,161,0.75);
+    }
+    /* 3D Hover Rotation on profile card */
+    .profile-card:hover {
+      animation-play-state: paused;
+    }
+    .profile-card {
+      transition: transform 0.4s ease;
+      will-change: transform;
+      transform-style: preserve-3d;
+    }
+    /* LinkedIn Button */
+    .linkedin-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 20px;
+      background-color: var(--linkedInBlue);
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      border-radius: 999px;
+      box-shadow: 0 6px 20px rgba(0,119,181,0.5);
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .linkedin-btn:hover, .linkedin-btn:focus {
+      background-color: var(--linkedInHover);
+      box-shadow: 0 10px 40px rgba(0,119,181,0.8);
+      outline: none;
+      transform: scale(1.05);
+    }
+    .linkedin-btn svg {
+      fill: white;
+      width: 20px;
+      height: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-anim" aria-hidden="true"></div>
+  <div class="container" role="main">
+    <header>
+      <div class="profile-card" id="profileCard" tabindex="0" aria-label="Profile card with interactive 3D effects">
+        <div class="avatar" id="avatar">
+          <img src="https://i.postimg.cc/PJsHqScQ/Whats-App-Image-2025-09-23-at-12-52-58-2efda121.jpg" alt="Deepthi M" />
+        </div>
+        <div class="details">
+          <h1>Deepthi M</h1>
+          <div class="subtitle">Electronics & Communication Engineer | Data Analytics Minor</div>
+          <div class="contact" role="contentinfo">Email: <a href="mailto:mdeepthi193@gmail.com" style="color:var(--accent);text-decoration:underline;">mdeepthi193@gmail.com</a> | Phone: +91 8105511035</div>
+          
+          <div class="badge-list">
+            <span class="badge" tabindex="0">IoT</span>
+            <span class="badge" tabindex="0">Machine Learning</span>
+            <span class="badge" tabindex="0">React</span>
+            <span class="badge" tabindex="0">Python</span>
+            <span class="badge" tabindex="0">Embedded</span>
+          </div>
+
+          <!-- Download Resume -->
+          <a href="https://drive.google.com/file/d/1xcn2V4VOabC6TAj_URzb-pz2gCvf2EtO/view?usp=drivesdk" download="Deepthi_M_Resume.pdf" class="download-btn" aria-label="Download resume of Deepthi M">Download Resume</a>
+
+          <!-- LinkedIn Button -->
+          <a href="https://www.linkedin.com/in/deepthi-m-0741a0317" target="_blank" rel="noopener" class="linkedin-btn" aria-label="Visit Deepthi's LinkedIn profile">
+            <svg role="img" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.447 20.452H17.22v-5.569c0-1.329-.024-3.04-1.851-3.04-1.852 0-2.136 1.446-2.136 2.94v5.669H10.088V9h3.106v1.561h.045c.433-.82 1.491-1.684 3.067-1.684 3.277 0 3.881 2.159 3.881 4.967v6.608zM5.337 7.433c-.998 0-1.807-.81-1.807-1.807 0-1 .81-1.81 1.807-1.81.998 0 1.807.81 1.807 1.807 0 1-.81 1.81-1.807 1.81zm1.486 13.019H3.849V9h2.974v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.725v20.549C0 23.227.792 24 1.77 24h20.451c.979 0 1.778-.773 1.778-1.726V1.726C24 .774 23.205 0 22.225 0z"/></svg>
+            LinkedIn Profile
+          </a>
+        </div>
+      </div>
+    </header>
+    <section class="section" id="education">
+      <h2>Education</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <h3>Bachelor of Engineering in Electronics & Communication, Minor in Data Analytics</h3>
+          <p><strong>B.M.S College Of Engineering, Bangalore, KA</strong> (Jul 2021 – Jul 2025)</p>
+        </div>
+        <div class="timeline-item">
+          <h3>Pre-University Education in PCME</h3>
+          <p><strong>B.M.S College For Women, Bangalore, KA</strong> (Jun 2019 – Mar 2021)</p>
+        </div>
+        <div class="timeline-item">
+          <h3>School Education</h3>
+          <p><strong>St. Thomas English School, Bangalore, KA</strong> (Jun 2009 – Mar 2019)</p>
+        </div>
+      </div>
+    </section>
+    <section class="section" id="experience">
+      <h2>Experience</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <h3>Design Engineer Intern</h3>
+          <p>Live-on Technolabs, Bangalore, KA (Apr 2024 – Jul 2024)</p>
+          <ul>
+            <li>Developed a Working Log-Periodic Antenna with fabrication and anechoic chamber testing</li>
+            <li>Attended client meetings from Electronics, Mechanical, Software domains</li>
+            <li>Visualized business models and marketing strategies</li>
+          </ul>
+        </div>
+        <div class="timeline-item">
+          <h3>Machine Learning Intern</h3>
+          <p>VR Academy, Bangalore, KA (Sep 2023 – Mar 2024)</p>
+          <ul>
+            <li>Developed and deployed machine learning models</li>
+            <li>Collaborated cross-functionally to identify business challenges</li>
+            <li>Preprocessed and analyzed large datasets</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <section class="section" id="projects">
+      <h2>Projects</h2>
+      <div class="projects-grid">
+        <div class="project" tabindex="0" aria-label="Project: Intelligent Surveillance Camera">
+          <h3>Intelligent Surveillance Camera</h3>
+          <p>Raspberry Pi + IR + HC-SR04 — real-time motion detection and lightweight edge ML alerts.</p>
+        </div>
+        <div class="project" tabindex="0" aria-label="Project: Cognitive Radio Networks">
+          <h3>Cognitive Radio Networks</h3>
+          <p>Python + React + 3D visualization for tower mapping and frequency analysis.</p>
+        </div>
+        <div class="project" tabindex="0" aria-label="Project: Smart Mirrors">
+          <h3>Smart Mirrors</h3>
+          <p>Modular MagicMirror build with voice integration and AI features for healthcare.</p>
+        </div>
+        <div class="project" tabindex="0" aria-label="Project: Steganography and Watermarking">
+          <h3>Steganography & Watermarking</h3>
+          <p>Python utility for embedding and verifying timestamps & watermarks in documents.</p>
+        </div>
+      </div>
+    </section>
+    <section class="section" id="memberships">
+  <h2>Memberships</h2>
+  <ul>
+    <li>IEEE </li>
+    <li>IEUN Society</li>
+    <li>BMSCE Phaseshift Lead</li>
+    <li>Research Gate</li>
+  </ul>
+</section>
+
+<section class="section" id="research-publications">
+  <h2>Research Publications</h2>
+  <ul>
+    <li>“Enhanced Motion Detection System for Surveillance Cameras using Raspberry Pi” - Published in International Journal of IoT Solutions, 2024</li>
+    <li>“3D Visualization Techniques in Cognitive Radio Networks” - Presented at IEEE Communications Conference, 2024</li>
+    <li>“AI-Powered Smart Mirror Framework for Healthcare Applications” - Published in Journal of Medical Engineering, 2025</li>
+    <li>“Robust Steganography and Watermarking Techniques for Document Security” - Presented at International Security and Cryptography Symposium, 2025</li>
+  </ul>
+    </section>
+    <footer>
+      © 2025 Deepthi M — Built with ❤️
+    </footer>
+  </div>
+  <!-- 3D card tilt interactive script -->
+  <script>
+    const profileCard = document.getElementById('profileCard');
+    const avatar = document.getElementById('avatar');
+    profileCard.addEventListener('mousemove', e => {
+      let rect = profileCard.getBoundingClientRect();
+      let x = e.clientX - rect.left - rect.width / 2;
+      let y = e.clientY - rect.top - rect.height / 2;
+      let rotateX = (-y / rect.height) * 14;
+      let rotateY = (x / rect.width) * 18;
+      profileCard.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+      avatar.style.transform = `translateZ(48px) rotateY(${rotateY * 0.6}deg) rotateX(${rotateX * 0.3}deg)`;
+    });
+    profileCard.addEventListener('mouseleave', e => {
+      profileCard.style.transform = '';
+      avatar.style.transform = 'translateZ(40px)';
+    });
+  </script>
+</body>
+</html>
